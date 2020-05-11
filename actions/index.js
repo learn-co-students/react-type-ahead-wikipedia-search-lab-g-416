@@ -1,15 +1,25 @@
-'use strict';
+"use strict"
 
-const jsonp = require('jsonp');
-const resultStore = require('../stores/resultStore');
-const wikipedia = require('../utils/wikipedia');
+const resultStore = require("../stores/resultStore");
+const wikipedia = require("../utils/wikipedia");
 
-const search = (query) => {
-  const requested = new Date();
+const search = query => {
+	const updated = new Date()
 
-  return wikipedia.search(query).then((data) => {
-    // TODO
-  });
-};
+	return wikipedia.search(query).then(data => {
+		if (!resultStore.isOutdated(updated)) {
+			const [query, titles, descriptions, links] = data;
+			const results = titles.map((title, i) => ({
+				title,
+				description: descriptions[i],
+				link: links[i]
+			}));
 
-module.exports = { search };
+			resultStore.setState({updated, results})
+		} else {
+			return
+		}
+	})
+}
+
+module.exports = {search}
