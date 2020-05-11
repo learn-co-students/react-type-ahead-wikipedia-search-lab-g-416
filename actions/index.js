@@ -8,20 +8,12 @@ const search = query => {
 
 	return wikipedia.search(query).then(data => {
 		if (!resultStore.isOutdated(updated)) {
-			const results = []
-
-			data[1].map(title => {
-				const obj = {}
-
-				obj["title"] = title;
-				results.push(obj);
-			});
-			data[2].map((desc, i) => {
-				results[i]["description"] = desc
-			});
-			data[3].map((link, i) => {
-				results[i]["link"] = link
-			});
+			const [query, titles, descriptions, links] = data;
+			const results = titles.map((title, i) => ({
+				title,
+				description: descriptions[i],
+				link: links[i]
+			}));
 
 			resultStore.setState({updated, results})
 		} else {

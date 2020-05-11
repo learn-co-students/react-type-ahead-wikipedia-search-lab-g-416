@@ -4,10 +4,10 @@ const React = require("react")
 
 const SearchResults = ({results}) =>
 	<ul className="search-results">
-		{results.map((result, i) =>
+		{results.map(({title, description, link}, i) =>
 			<li key={i}>
-				<a href={result.link}>{result.title}</a>
-				<p>{result.description}</p>
+				<a href={link}>{title}</a>
+				<p>{description}</p>
 			</li>)}
 	</ul>
 
