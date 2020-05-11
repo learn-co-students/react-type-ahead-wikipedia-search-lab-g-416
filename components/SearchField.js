@@ -1,9 +1,7 @@
-'use strict'
+"use strict"
 
-const React = require('react');
+const React = require("react")
 
-const SearchField = props => (
-  <input />
-);
+const SearchField = ({value, onChange}) => <input className="search-field" value={value} onChange={onChange} />
 
-module.exports = SearchField;
+module.exports = SearchField
